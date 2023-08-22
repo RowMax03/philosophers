@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mreidenb <mreidenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 17:47:13 by mreidenb          #+#    #+#             */
-/*   Updated: 2023/08/23 00:08:26 by mreidenb         ###   ########.fr       */
+/*   Updated: 2023/08/23 01:07:07 by mreidenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_philo	**bear_philos(t_rules *rules)
 	int		i;
 
 	i = 0;
-	philos = malloc((rules->amount + 1) * sizeof(t_philo *));
+	philos = malloc(rules->amount * sizeof(t_philo *));
 	while (i < rules->amount)
 	{
 		philos[i] = malloc(sizeof(t_philo));
@@ -85,7 +85,6 @@ int	let_philos_free(t_philo **philos, t_rules *rules)
 		free(philos[i]);
 		i++;
 	}
-	free(philos[rules->amount]);
 	free(philos);
 	free(rules);
 	return (0);
