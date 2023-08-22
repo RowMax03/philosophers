@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C Debug",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/philo", // Replace with the path to your executable
+            "args": ["4", "800", "200", "200", "4"], // Command line arguments
+            "cwd": "${workspaceFolder}",
+            "logging": {
+                "trace": "false",
+                "traceResponse": "false",
+                "engineLogging": "false"
+            },
+            "linux": {
+                "miDebuggerPath": "lldb", // No need to change this on M1 Silicon Mac
+            },
+            "osx": {
+                "miDebuggerPath": "lldb", // No need to change this on M1 Silicon Mac
+            },
+            "windows": {
+                "miDebuggerPath": "lldb", // No need to change this on M1 Silicon Mac
+            },
+            "launchCompleteCommand": "exec-run",
+        }
+    ]
+}
