@@ -32,6 +32,8 @@ t_rules	*init_rules(int argc, char *argv[])
 	rules->time_to_die = ft_atoi_l(argv[2]);
 	rules->time_to_eat = ft_atoi_l(argv[3]);
 	rules->time_to_sleep = ft_atoi_l(argv[4]);
+	pthread_mutex_init(&rules->death, NULL);
+	rules->dead = false;
 	pthread_mutex_init(&rules->printing, NULL);
 	rules->times_to_eat = INT_MAX;
 	if (argc == 6)
@@ -43,9 +45,23 @@ int	starvation(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->eating);
 	if (philo->last_ate + philo->rules->time_to_die < current_time_ms())
+	{
+		pthread_mutex_unlock(&philo->eating);
+		pthread_mutex_lock(&philo->rules->death);
+		philo->rules->dead = true;
+		pthread_mutex_unlock(&philo->rules->death);
 		return (1);
+	}
 	else
 		return (pthread_mutex_unlock(&philo->eating));
+}
+
+void	*finish(t_rules *rules)
+{
+	pthread_mutex_lock(&rules->death);
+	rules->dead = true;
+	pthread_mutex_unlock(&rules->death);
+	return (NULL);
 }
 
 void	*table(void *arg)
@@ -72,7 +88,7 @@ void	*table(void *arg)
 			i++;
 		}
 		if (fin)
-			pthread_exit(NULL);
+			pthread_exit(finish(philos[0]->rules));
 	}
 	return (NULL);
 }

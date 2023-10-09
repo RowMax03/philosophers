@@ -50,6 +50,10 @@ long	ft_atoi_l(const char *str)
 
 void	print_process(t_philo *philo, char *msg, char *format)
 {
+	pthread_mutex_lock(&philo->rules->death);
+	if (philo->rules->dead && *msg != 'd')
+		return (pthread_mutex_unlock(&philo->rules->death), (void)0);
+	pthread_mutex_unlock(&philo->rules->death);
 	pthread_mutex_lock(&philo->rules->printing);
 	printf("%s%ld \t%d\t %s%s\n", format,
 		current_time_ms() - philo->rules->start_time, philo->n + 1, msg, RESET);

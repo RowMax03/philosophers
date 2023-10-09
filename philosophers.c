@@ -41,12 +41,17 @@ void	*life(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->n % 4)
 		p_sleep(3);
-	while (1)
+	pthread_mutex_lock(&philo->rules->death);
+	while (!philo->rules->dead)
 	{
+		pthread_mutex_unlock(&philo->rules->death);
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
+		pthread_mutex_lock(&philo->rules->death);
 	}
+	pthread_mutex_unlock(&philo->rules->death);
+	return (NULL);
 }
 
 void	sit_philos_down(t_philo **philos)
@@ -76,8 +81,9 @@ int	let_philos_free(t_philo **philos, t_rules *rules)
 	int	i;
 
 	i = 0;
+
 	while (i < rules->amount)
-		pthread_detach(philos[i++]->id);
+		pthread_join(philos[i++]->id, NULL);
 	i = 0;
 	while (i < rules->amount)
 	{

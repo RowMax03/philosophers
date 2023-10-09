@@ -15,6 +15,7 @@
 
 # include <pthread.h>
 # include <stdio.h>
+# include <stdbool.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/time.h>
@@ -44,6 +45,8 @@ typedef struct s_rules
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
 	long			times_to_eat;
+	pthread_mutex_t	death;
+	bool			dead;
 	pthread_mutex_t	printing;
 }			t_rules;
 
