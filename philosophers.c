@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreidenb <mreidenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreidenb <mreidenb@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 17:47:13 by mreidenb          #+#    #+#             */
-/*   Updated: 2023/08/23 01:07:07 by mreidenb         ###   ########.fr       */
+/*   Updated: 2023/10/09 13:13:22 by mreidenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,10 @@ int	let_philos_free(t_philo **philos, t_rules *rules)
 
 	i = 0;
 	while (i < rules->amount)
+		pthread_detach(philos[i++]->id);
+	i = 0;
+	while (i < rules->amount)
 	{
-		pthread_detach(philos[i]->id);
 		pthread_mutex_destroy(&philos[i]->right);
 		pthread_mutex_destroy(&philos[i]->eating);
 		pthread_mutex_destroy(&philos[i]->tte);

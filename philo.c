@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.c                                     :+:      :+:    :+:   */
+/*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreidenb <mreidenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreidenb <mreidenb@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:54:42 by mreidenb          #+#    #+#             */
-/*   Updated: 2023/08/22 23:58:32 by mreidenb         ###   ########.fr       */
+/*   Updated: 2023/10/09 13:08:43 by mreidenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	*table(void *arg)
 		while (i < amount)
 		{
 			if (starvation(philos[i]))
-				pthread_exit(philos[i]);
+				return (philos[i]);
 			pthread_mutex_lock(&philos[i]->tte);
 			if (philos[i]->to_eat > 0)
 				fin = 0;
